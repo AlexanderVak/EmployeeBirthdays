@@ -48,6 +48,22 @@ export function planningHorizon(horizon, employees) {
             break;
     }
 }
+function pluralize(age, one, few, many) {
+    let num = 0
+    if(age >= 20)
+        num = age % 10
+        
+    switch (true) {
+        case num === 0:
+            return `${age} ${few}`
+        case num >= 2 && num <= 4:
+            return `${age} ${many}`
+        case num >= 5 && num <= 19:
+            return `${age} ${few}`
+        default:
+            return `${age} ${one}`
+    }
+}
 export function showListOfEmployeesBirthdays(employees){
     let currentDate = moment()
     let futureDate = moment()
@@ -55,7 +71,7 @@ export function showListOfEmployeesBirthdays(employees){
     let result = ''
     for (let i = 0; i < employees.length; i++) {
         for (let j = 0; j < employees[i].length; j++) {
-            innerText += `(${employees[i][j].birthday.format("D")}) -  ${employees[i][j].name} (${moment().year(age(employees[i][j])).format('yy')})\n`            
+            innerText += `(${employees[i][j].birthday.format("D")}) -  ${employees[i][j].name} (${pluralize(age(employees[i][j]), 'рік', 'років', 'роки')})\n`            
         }
         result += `${futureDate.format("MMMM YYYY")}\n` + innerText
         innerText = ''
@@ -66,4 +82,4 @@ export function showListOfEmployeesBirthdays(employees){
 
 }
 
-console.log(planningHorizon(2, employeesSortedByDay(employeesGroupedByMonths(input))));
+console.log(showListOfEmployeesBirthdays(planningHorizon(2, employeesSortedByDay(employeesGroupedByMonths(input)))));

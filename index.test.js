@@ -19,7 +19,7 @@ describe('employee bitydays', () => {
         expect(planningHorizon(2, employeesSortedByDay(employeesGroupedByMonths(input)))).toEqual([[input[4]], [input[5]], [input[1]]])
     });
     it('should return group employees with same birthday month', () => {
-        expect(showListOfEmployeesBirthdays(planningHorizon(2, employeesSortedByDay(employeesGroupedByMonths(input))))).toEqual('липень 2021\n(22) -  Бруно Бучаратті (21)\nсерпень 2021\n(12) -  Діо Брандо (34)\nвересень 2021\n(27) -  Джозеф Джостар (24)\n')
+        expect(showListOfEmployeesBirthdays(planningHorizon(2, employeesSortedByDay(employeesGroupedByMonths(input))))).toEqual('липень 2021\n(22) -  Бруно Бучаратті (21 рік)\nсерпень 2021\n(12) -  Діо Брандо (34 роки)\nвересень 2021\n(27) -  Джозеф Джостар (24 роки)\n')
     });
 
 });
