@@ -10,9 +10,9 @@ export const input = [
     { name: 'Діо Брандо', birthday: moment('1986-08-12') },
 ]
 
-export function age(input){
+export function age(employee){
     let today = moment()
-    let birthday = input[3].birthday
+    let birthday = employee.birthday
     let age = today.diff(birthday, 'years')
     return age
 }
@@ -50,17 +50,20 @@ export function planningHorizon(horizon, employees) {
 }
 export function showListOfEmployeesBirthdays(employees){
     let currentDate = moment()
-    var futureDate = moment()
+    let futureDate = moment()
+    let innerText = ''
+    let result = ''
     for (let i = 0; i < employees.length; i++) {
         for (let j = 0; j < employees[i].length; j++) {
-            `${futureDate.format("MMMM YYY")}\n${}`
-            
+            innerText += `(${employees[i][j].birthday.format("D")}) -  ${employees[i][j].name} (${moment().year(age(employees[i][j])).format('yy')})\n`            
         }
+        result += `${futureDate.format("MMMM YYYY")}\n` + innerText
+        innerText = ''
         futureDate = moment(currentDate).add(1, 'M');
-        
+        currentDate = futureDate
     }
-    return `${moment().year().month().format("MMMM YYY")}`
+    return result
 
 }
 
-console.log(showListOfEmployeesBirthdays(planningHorizon(2, employeesSortedByDay(employeesGroupedByMonths(input)))));
+console.log(planningHorizon(2, employeesSortedByDay(employeesGroupedByMonths(input))));
