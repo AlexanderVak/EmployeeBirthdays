@@ -1,33 +1,29 @@
+#!/usr/bin/env node
 import moment from 'moment';
 import 'moment/locale/uk.js';
 import csv from 'csv-parser'
 import fs from 'fs'; //file system module allows to work with the file system on computer
 moment.locale('uk')
 
-const employeesRawData = []
+const path = process.argv[2] //employees.csv
+const horizon = Number(process.argv[3])
 
-fs.createReadStream('employees.csv')
+export const employeesRawData = []
+
+fs.createReadStream(path)
     .pipe(csv())
         .on('data', row => {
-            console.log(row.Birthday);
             const employee = {
                 name: row.Name,
                 birthday: moment(row.Birthday)
             }
             employeesRawData.push(employee)
+            
         })
         .on('end', () => {
-            console.log(employeesGroupedByMonths(employeesRawData))
-            // console.log(showListOfEmployeesBirthdays(planningHorizon(2, employeesSortedByDay(employeesGroupedByMonths(employeesRawData)))));
+            console.log(showListOfEmployeesBirthdays(planningHorizon(horizon, employeesSortedByDay(employeesGroupedByMonths(employeesRawData)))));
         })
-// export const input = [
-//     { name: 'Джорно Джованна', birthday: moment('2000-04-16') },
-//     { name: 'Джозеф Джостар', birthday: moment('1996-09-27') },
-//     { name: 'Куджо Джотаро', birthday: moment('2000-05-10') },
-//     { name: 'Джонатан Джостар', birthday: moment("1986-04-04")},
-//     { name: 'Бруно Бучаратті', birthday: moment('2000-07-22') },
-//     { name: 'Діо Брандо', birthday: moment('1986-08-12') },
-// ]
+
 
 export function age(employee){
     let today = moment()
@@ -90,7 +86,7 @@ export function showListOfEmployeesBirthdays(employees){
     let result = ''
     for (let i = 0; i < employees.length; i++) {
         for (let j = 0; j < employees[i].length; j++) {
-            innerText += `(${employees[i][j].birthday.format("D")}) -  ${employees[i][j].name} (${pluralize(age(employees[i][j]), 'рік', 'років', 'роки')})\n`            
+            innerText += `(${employees[i][j].birthday.format("D")}) - ${employees[i][j].name} (${pluralize(age(employees[i][j]), 'рік', 'років', 'роки')})\n`            
         }
         result += `${futureDate.format("MMMM YYYY")}\n` + innerText
         innerText = ''

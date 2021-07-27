@@ -9,7 +9,7 @@ import moment from 'moment';
     { name: 'Діо Брандо', birthday: moment('1986-08-12') },
 ]
 
-describe('employee bitydays', () => {
+describe('employee birthdays', () => {
     it('should show employee`s birthday', () => {
         expect(`${input[3].name} ${input[3].birthday.format("D MMMM")}`).toBe('Джонатан Джостар 4 квітня')                        
     });
